@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reaction Time Test - Test Your Reflexes Online</title>
+<meta name="description" content="Test your reaction time for free. Click when the screen turns green to see your reflexes. How fast are you?">
+
+<!-- AdSense verification: paste YOUR code here after approval -->
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.6; color: #222; background: #f7f9fc; padding: 20px;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  header { text-align: center; padding: 24px 0 16px; }
+  header h1 { font-size: 1.7rem; margin-bottom: 8px; }
+  header p { color: #666; font-size: 0.95rem; }
+  .card {
+    background: #fff; border-radius: 10px; padding: 24px;
+    margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  
+  /* Game Area Styles */
+  #game-box {
+    width: 100%; height: 250px; border-radius: 10px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    cursor: pointer; user-select: none; transition: background-color 0.1s;
+    background-color: #4a7dff; color: white; text-align: center; padding: 20px;
+  }
+  #game-box h2 { font-size: 1.5rem; margin-bottom: 10px; }
+  #game-box p { font-size: 1rem; }
+  .state-wait { background-color: #d9534f !important; }
+  .state-ready { background-color: #5cb85c !important; }
+  .state-result { background-color: #f0ad4e !important; color: #222 !important; }
+  
+  .best-score { margin-top: 15px; text-align: center; font-weight: bold; color: #2a52c7; }
+
+  .ad-slot {
+    text-align: center; color: #999; font-size: 0.8rem;
+    padding: 12px; border: 1px dashed #ccd; border-radius: 8px; margin: 20px 0;
+  }
+  .faq-item { margin-bottom: 14px; }
+  .faq-item h3 { font-size: 1rem; margin-bottom: 4px; }
+  .faq-item p { color: #555; font-size: 0.95rem; }
+  footer { text-align: center; color: #888; font-size: 0.85rem; padding: 24px 0; }
+  footer a { color: #4a7dff; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>Reaction Time Test</h1>
+    <p>How fast are your reflexes? Test yourself below and try to beat your best score.</p>
+  </header>
+
+  <div class="card">
+    <!-- The Game Box -->
+    <div id="game-box" onclick="handleClick()">
+      <h2>Click to Start</h2>
+      <p>Wait for the green color, then click as fast as you can!</p>
+    </div>
+    <div class="best-score" id="best-score-display">Your best: -- ms</div>
+  </div>
+
+  <!-- Ad slot 1 -->
+  <div class="ad-slot">Ad space — paste your AdSense ad unit code here</div>
+
+  <div class="card">
+    <h2>How this test works</h2>
+    <p style="margin-bottom:12px;">
+      When you click "Start", the box turns red. Wait for it to turn <strong>green</strong>, and click
+      immediately. The time between the green color appearing and your click is your reaction time.
+    </p>
+    <p>
+      The average human reaction time is around 250 milliseconds (ms). Professional esports players and
+      race car drivers often score below 200 ms. If you click too early (while it is still red), the test
+      resets and you have to try again.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item">
+      <h3>What is a good reaction time?</h3>
+      <p>Anything under 250 ms is above average. Under 200 ms is excellent. Under 150 ms is extremely rare.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Why is my reaction time slower on mobile?</h3>
+      <p>Touchscreens have a slight input delay compared to a computer mouse. For the most accurate score, use a desktop or laptop.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Does this page store my scores?</h3>
+      <p>Your best score is saved temporarily in your browser so you can try to beat it. We do not store your data on any server.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Reaction Test ·
+      <a href="privacy.html">Privacy Policy</a> ·
+      <a href="about.html">About</a>
+    </p>
+  </footer>
+
+</div>
+
+<script>
+  let state = 'idle'; // idle, waiting, ready, result
+  let timeoutId;
+  let startTime;
+  let bestScore = null;
+
+  const box = document.getElementById('game-box');
+  const bestDisplay = document.getElementById('best-score-display');
+
+  // Load best score from browser memory if it exists
+  if (localStorage.getItem('bestReactionScore')) {
+    bestScore = parseInt(localStorage.getItem('bestReactionScore'));
+    bestDisplay.innerText = 'Your best: ' + bestScore + ' ms';
+  }
+
+  function handleClick() {
+    if (state === 'idle') {
+      startWaiting();
+    } 
+    else if (state === 'waiting') {
+      // Clicked too early!
+      clearTimeout(timeoutId);
+      state = 'result';
+      box.className = 'state-result';
+      box.innerHTML = '<h2>Too early!</h2><p>You clicked before the green appeared. Click to try again.</p>';
+    } 
+    else if (state === 'ready') {
+      // Success!
+      const endTime = Date.now();
+      const reactionTime = endTime - startTime;
+      state = 'result';
+      box.className = 'state-result';
+      
+      let message = '<h2>' + reactionTime + ' ms</h2>';
+      
+      // Update best score
+      if (bestScore === null || reactionTime < bestScore) {
+        bestScore = reactionTime;
+        localStorage.setItem('bestReactionScore', bestScore);
+        bestDisplay.innerText = 'Your best: ' + bestScore + ' ms';
+        message += '<p>🏆 New Best Score!</p><p>Click to try again.</p>';
+      } else {
+        message += '<p>Click to try again.</p>';
+      }
+      
+      box.innerHTML = message;
+    } 
+    else if (state === 'result') {
+      // Reset to idle
+      startWaiting();
+    }
+  }
+
+  function startWaiting() {
+    state = 'waiting';
+    box.className = 'state-wait';
+    box.innerHTML = '<h2>Wait for green...</h2>';
+    
+    // Random time between 2 and 5 seconds
+    const delay = Math.floor(Math.random() * 3000) + 2000;
+    
+    timeoutId = setTimeout(() => {
+      state = 'ready';
+      box.className = 'state-ready';
+      box.innerHTML = '<h2>CLICK NOW!</h2>';
+      startTime = Date.now();
+    }, delay);
+  }
+</script>
+</body>
+</html>
