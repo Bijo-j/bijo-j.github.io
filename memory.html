@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Color Memory Test - How Good Is Your Short-Term Memory?</title>
+<meta name="description" content="Test your memory for free. Watch the sequence of colors and repeat it. How many levels can you complete?">
+
+<!-- AdSense verification: paste YOUR code here after approval -->
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.6; color: #222; background: #f7f9fc; padding: 20px;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  header { text-align: center; padding: 24px 0 16px; }
+  header h1 { font-size: 1.7rem; margin-bottom: 8px; }
+  header p { color: #666; font-size: 0.95rem; }
+  .card {
+    background: #fff; border-radius: 10px; padding: 24px;
+    margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    text-align: center;
+  }
+  
+  /* Game Area Styles */
+  #game-board {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    max-width: 400px;
+    margin: 0 auto 20px auto;
+  }
+  
+  .color-btn {
+    width: 100%;
+    padding-top: 100%; /* Creates a perfect square */
+    border-radius: 12px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.1s, transform 0.1s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  
+  /* The flash effect when a color is played */
+  .color-btn.active {
+    opacity: 1;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  }
+  
+  .color-btn:active { transform: scale(0.95); }
+  
+  /* Colors */
+  .red { background-color: #e74c3c; }
+  .blue { background-color: #3498db; }
+  .green { background-color: #2ecc71; }
+  .yellow { background-color: #f1c40f; }
+  
+  .game-info {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #2a52c7;
+  }
+
+  button {
+    width: 100%; max-width: 400px; padding: 12px; background: #4a7dff; color: #fff;
+    border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;
+  }
+  button:hover { background: #3a6ae8; }
+  button:disabled { background: #ccc; cursor: not-allowed; }
+
+  .ad-slot {
+    text-align: center; color: #999; font-size: 0.8rem;
+    padding: 12px; border: 1px dashed #ccd; border-radius: 8px; margin: 20px 0;
+  }
+  .faq-item { margin-bottom: 14px; text-align: left; }
+  .faq-item h3 { font-size: 1rem; margin-bottom: 4px; }
+  .faq-item p { color: #555; font-size: 0.95rem; }
+  footer { text-align: center; color: #888; font-size: 0.85rem; padding: 24px 0; }
+  footer a { color: #4a7dff; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>Color Memory Test</h1>
+    <p>Watch the sequence of colors flash, then repeat it. How many levels can you survive?</p>
+  </header>
+
+  <div class="card">
+    <div class="game-info" id="status">Press Start to Play</div>
+    
+    <div id="game-board">
+      <div class="color-btn red" id="btn0" onclick="handleUserClick(0)"></div>
+      <div class="color-btn blue" id="btn1" onclick="handleUserClick(1)"></div>
+      <div class="color-btn green" id="btn2" onclick="handleUserClick(2)"></div>
+      <div class="color-btn yellow" id="btn3" onclick="handleUserClick(3)"></div>
+    </div>
+
+    <div class="game-info" id="score-display">Score: 0</div>
+    <button id="start-btn" onclick="startGame()">Start Game</button>
+  </div>
+
+  <!-- Ad slot -->
+  <div class="ad-slot">Ad space — paste your AdSense ad unit code here</div>
+
+  <div class="card">
+    <h2>How this memory test works</h2>
+    <p style="margin-bottom:12px; text-align: left;">
+      When you click Start, one of the colors will flash. After it finishes flashing, click that same color. 
+      If you get it right, the game will add a second color to the sequence. 
+    </p>
+    <p style="text-align: left;">
+      You must repeat the entire sequence from the beginning. The sequence gets longer and faster every level. 
+      The average person can remember about 5 to 7 colors in a row. Test your brain and see how you compare!
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item">
+      <h3>Is this a good brain exercise?</h3>
+      <p>Yes! This game tests your visual short-term memory and concentration. It is similar to the classic game "Simon".</p>
+    </div>
+    <div class="faq-item">
+      <h3>What is a good score?</h3>
+      <p>Reaching level 5 is average. Reaching level 8 or higher puts your short-term memory in the top tier.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Does this page store my scores?</h3>
+      <p>Your best score is saved temporarily in your browser so you can try to beat it. We do not store your data on any server.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Memory Test ·
+      <a href="privacy.html">Privacy Policy</a> ·
+      <a href="about.html">About</a>
+    </p>
+  </footer>
+
+</div>
+
+<script>
+  const colors = ['red', 'blue', 'green', 'yellow'];
+  let sequence = [];
+  let userSequence = [];
+  let level = 0;
+  let isPlaying = false;
+  let isUserTurn = false;
+
+  const statusEl = document.getElementById('status');
+  const scoreEl = document.getElementById('score-display');
+  const startBtn = document.getElementById('start-btn');
+
+  function startGame() {
+    sequence = [];
+    userSequence = [];
+    level = 0;
+    isPlaying = true;
+    startBtn.disabled = true;
+    startBtn.innerText = "Watch...";
+    scoreEl.innerText = "Score: 0";
+    nextLevel();
+  }
+
+  function nextLevel() {
+    level++;
+    userSequence = [];
+    scoreEl.innerText = "Score: " + (level - 1);
+    statusEl.innerText = "Level " + level;
+    
+    // Add a random color to the sequence
+    const randomColor = Math.floor(Math.random() * 4);
+    sequence.push(randomColor);
+    
+    // Play the sequence after a short delay
+    setTimeout(() => {
+      playSequence();
+    }, 1000);
+  }
+
+  function playSequence() {
+    isUserTurn = false;
+    statusEl.innerText = "Watch the sequence...";
+    
+    let i = 0;
+    const interval = setInterval(() => {
+      flashColor(sequence[i]);
+      i++;
+      if (i >= sequence.length) {
+        clearInterval(interval);
+        setTimeout(() => {
+          isUserTurn = true;
+          statusEl.innerText = "Your turn!";
+        }, 500);
+      }
+    }, 800); // Speed of the sequence
+  }
+
+  function flashColor(index) {
+    const btn = document.getElementById('btn' + index);
+    btn.classList.add('active');
+    
+    // Simple sound effect using Web Audio API (no files needed)
+    playTone(index);
+    
+    setTimeout(() => {
+      btn.classList.remove('active');
+    }, 400);
+  }
+
+  function handleUserClick(index) {
+    if (!isUserTurn) return; // Ignore clicks if it's not the user's turn
+    
+    flashColor(index); // Flash the button they clicked
+    userSequence.push(index);
+    
+    // Check if the user clicked the right color
+    const currentStep = userSequence.length - 1;
+    if (userSequence[currentStep] !== sequence[currentStep]) {
+      // Wrong color!
+      gameOver();
+      return;
+    }
+    
+    // Check if they finished the sequence correctly
+    if (userSequence.length === sequence.length) {
+      isUserTurn = false;
+      statusEl.innerText = "Good job!";
+      setTimeout(() => {
+        nextLevel();
+      }, 1000);
+    }
+  }
+
+  function gameOver() {
+    isUserTurn = false;
+    isPlaying = false;
+    statusEl.innerText = "Game Over!";
+    startBtn.disabled = false;
+    startBtn.innerText = "Try Again";
+    
+    // Error sound
+    playTone(1, true); 
+  }
+
+  // Audio feature (No external files needed)
+  function playTone(index, isError = false) {
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      
+      if (isError) {
+        osc.frequency.value = 150; // Low error buzz
+      } else {
+        // Different pitch for each color
+        const frequencies = [329.63, 261.63, 392.00, 196.00]; // E, C, G, low G
+        osc.frequency.value = frequencies[index];
+      }
+      
+      osc.type = 'sine';
+      gain.gain.setValueAtTime(0.1, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+      
+      osc.start();
+      osc.stop(ctx.currentTime + 0.4);
+    } catch (e) {
+      console.log("Audio not supported");
+    }
+  }
+</script>
+</body>
+</html>
