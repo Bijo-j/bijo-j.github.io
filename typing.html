@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Typing Speed Test - How Fast Can You Type?</title>
+<meta name="description" content="Test your typing speed (WPM) for free. Find out how many words per minute you can type and check your accuracy.">
+
+<!-- AdSense verification: paste YOUR code here after approval -->
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.6; color: #222; background: #f7f9fc; padding: 20px;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  header { text-align: center; padding: 24px 0 16px; }
+  header h1 { font-size: 1.7rem; margin-bottom: 8px; }
+  header p { color: #666; font-size: 0.95rem; }
+  .card {
+    background: #fff; border-radius: 10px; padding: 24px;
+    margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  
+  /* Game Area Styles */
+  #text-display {
+    font-size: 1.2rem; line-height: 1.8; color: #555;
+    background: #f0f4f8; padding: 20px; border-radius: 8px;
+    margin-bottom: 15px; user-select: none;
+  }
+  #text-display span.correct { color: #2a52c7; font-weight: bold; }
+  #text-display span.incorrect { color: #d9534f; text-decoration: line-through; }
+  
+  #type-input {
+    width: 100%; padding: 15px; font-size: 1.1rem;
+    border: 2px solid #ccd; border-radius: 8px; outline: none;
+    margin-bottom: 15px;
+  }
+  #type-input:focus { border-color: #4a7dff; }
+  
+  .stats { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 15px; color: #333; }
+  
+  button {
+    width: 100%; padding: 12px; background: #4a7dff; color: #fff;
+    border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;
+  }
+  button:hover { background: #3a6ae8; }
+
+  .ad-slot {
+    text-align: center; color: #999; font-size: 0.8rem;
+    padding: 12px; border: 1px dashed #ccd; border-radius: 8px; margin: 20px 0;
+  }
+  .faq-item { margin-bottom: 14px; }
+  .faq-item h3 { font-size: 1rem; margin-bottom: 4px; }
+  .faq-item p { color: #555; font-size: 0.95rem; }
+  footer { text-align: center; color: #888; font-size: 0.85rem; padding: 24px 0; }
+  footer a { color: #4a7dff; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>Typing Speed Test</h1>
+    <p>How fast are your fingers? Type the paragraph below as quickly and accurately as you can.</p>
+  </header>
+
+  <div class="card">
+    <div class="stats">
+      <span id="timer">Time: 0s</span>
+      <span id="wpm">WPM: --</span>
+    </div>
+
+    <div id="text-display">
+      <!-- The text will be loaded here by JavaScript -->
+    </div>
+
+    <input type="text" id="type-input" placeholder="Click here and start typing..." disabled>
+    
+    <button id="start-btn" onclick="startTest()">Start Test</button>
+  </div>
+
+  <!-- Ad slot 1 -->
+  <div class="ad-slot">Ad space — paste your AdSense ad unit code here</div>
+
+  <div class="card">
+    <h2>How this test works</h2>
+    <p style="margin-bottom:12px;">
+      When you click "Start Test", a random paragraph will appear. Simply start typing it exactly as you see it. 
+      The timer starts as soon as you press your first key.
+    </p>
+    <p>
+      <strong>WPM</strong> stands for Words Per Minute. The average person types at about 40 WPM. 
+      Professional typists and programmers usually type between 65 and 90 WPM. Try to get your accuracy as close to 100% as possible!
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item">
+      <h3>What is a good typing speed?</h3>
+      <p>40 WPM is average. 60 WPM is above average and good enough for most office jobs. 80+ WPM is considered professional.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Does accuracy matter?</h3>
+      <p>Yes! If you type 100 words per minute but make 20 mistakes, your actual speed is much lower. This test tracks your exact WPM.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Why is the text so random?</h3>
+      <p>Random text prevents you from memorizing the paragraph and forces you to actually read and type, giving you a true score.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Typing Test ·
+      <a href="privacy.html">Privacy Policy</a> ·
+      <a href="about.html">About</a>
+    </p>
+  </footer>
+
+</div>
+
+<script>
+  const paragraphs = [
+    "The quick brown fox jumps over the lazy dog. This pangram contains all the letters of the alphabet and is often used to test typewriters and computer keyboards.",
+    "Space exploration has always fascinated humanity. From the first moon landing to the modern Mars rovers, we continue to push the boundaries of what is possible.",
+    "Cooking at home is not only a great way to save money, but it also allows you to control exactly what goes into your body. Fresh ingredients make a huge difference.",
+    "The internet has completely transformed the way we communicate, learn, and do business. Information is now available at our fingertips in a matter of seconds."
+  ];
+
+  let textToType = "";
+  let startTime = null;
+  let timerInterval = null;
+  let isTyping = false;
+
+  const display = document.getElementById('text-display');
+  const input = document.getElementById('type-input');
+  const timerEl = document.getElementById('timer');
+  const wpmEl = document.getElementById('wpm');
+  const startBtn = document.getElementById('start-btn');
+
+  function startTest() {
+    // Pick random paragraph
+    textToType = paragraphs[Math.floor(Math.random() * paragraphs.length)];
+    
+    // Reset UI
+    display.innerHTML = textToType.split('').map(char => `<span>${char}</span>`).join('');
+    input.value = '';
+    input.disabled = false;
+    input.focus();
+    startBtn.style.display = 'none';
+    timerEl.innerText = 'Time: 0s';
+    wpmEl.innerText = 'WPM: --';
+    
+    startTime = null;
+    isTyping = false;
+    
+    // Handle typing
+    input.oninput = () => {
+      if (!startTime) {
+        startTime = Date.now();
+        timerInterval = setInterval(updateTimer, 1000);
+      }
+      checkTyping();
+    };
+  }
+
+  function updateTimer() {
+    const timeElapsed = Math.floor((Date.now() - startTime) / 1000);
+    timerEl.innerText = 'Time: ' + timeElapsed + 's';
+    
+    // Calculate WPM
+    const wordsTyped = input.value.length / 5; // Standard WPM calc: 5 chars = 1 word
+    const minutes = timeElapsed / 60;
+    if (minutes > 0) {
+      const wpm = Math.round(wordsTyped / minutes);
+      wpmEl.innerText = 'WPM: ' + wpm;
+    }
+  }
+
+  function checkTyping() {
+    const inputVal = input.value;
+    const spanElements = display.querySelectorAll('span');
+    
+    let isComplete = true;
+
+    spanElements.forEach((span, index) => {
+      const char = inputVal[index];
+      
+      if (char == null) {
+        // Not typed yet
+        span.className = '';
+        isComplete = false;
+      } else if (char === span.innerText) {
+        span.className = 'correct';
+      } else {
+        span.className = 'incorrect';
+      }
+    });
+
+    // If they finished typing the whole paragraph
+    if (isComplete && inputVal.length === textToType.length) {
+      endTest();
+    }
+  }
+
+  function endTest() {
+    clearInterval(timerInterval);
+    input.disabled = true;
+    startBtn.style.display = 'block';
+    startBtn.innerText = 'Try Again';
+    
+    // Final calculation
+    const timeElapsed = (Date.now() - startTime) / 1000 / 60; // in minutes
+    const wordsTyped = textToType.length / 5;
+    const finalWpm = Math.round(wordsTyped / timeElapsed);
+    
+    wpmEl.innerText = 'Final WPM: ' + finalWpm;
+    timerEl.innerText = 'Done!';
+  }
+</script>
+</body>
+</html>
