@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Online Tools & Mini Arcade</title>
+<meta name="description" content="A collection of free online tools, calculators, and quick mini-games. Test your memory, typing speed, reflexes, and more.">
+
+<!-- AdSense verification: paste YOUR code here after approval -->
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.6; color: #333; background: #f7f9fc; padding: 20px;
+  }
+  .container { max-width: 800px; margin: 0 auto; }
+  
+  header { text-align: center; padding: 40px 0 30px; }
+  header h1 { font-size: 2.2rem; margin-bottom: 10px; color: #1a365d; }
+  header p { color: #4a5568; font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .tool-card {
+    background: #fff; border-radius: 12px; padding: 24px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    text-decoration: none; color: #333;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-top: 5px solid #4a7dff;
+    display: flex; flex-direction: column;
+  }
+  .tool-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+  }
+  .tool-card h2 { font-size: 1.3rem; margin-bottom: 8px; color: #2d3748; }
+  .tool-card p { color: #718096; font-size: 0.95rem; flex-grow: 1; }
+  .tool-card span {
+    display: inline-block; margin-top: 15px;
+    font-weight: 700; color: #4a7dff;
+  }
+
+  /* Different border colors for different types */
+  .card-game { border-top-color: #e53e3e; }
+  .card-game span { color: #e53e3e; }
+
+  .ad-slot {
+    text-align: center; color: #a0aec0; font-size: 0.8rem;
+    padding: 15px; border: 1px dashed #cbd5e0; border-radius: 8px; margin: 30px 0;
+  }
+  
+  footer { text-align: center; color: #718096; font-size: 0.85rem; padding: 30px 0; border-top: 1px solid #e2e8f0; margin-top: 30px; }
+  footer a { color: #3182ce; text-decoration: none; margin: 0 10px; font-weight: 600; }
+  footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>Free Online Tools & Mini Arcade</h1>
+    <p>Welcome! We provide free, fast, and easy-to-use calculators and quick games to test your brain and reflexes. No signup required.</p>
+  </header>
+
+  <!-- The Grid of Tools -->
+  <div class="grid">
+    
+    <!-- Tool 1: Hydration -->
+    <a href="hydration.html" class="tool-card">
+      <h2>💧 Water Intake Calculator</h2>
+      <p>Find out exactly how much water you need to drink daily based on your weight, climate, and activity level.</p>
+      <span>Open Tool &rarr;</span>
+    </a>
+
+    <!-- Tool 2: Percentage -->
+    <a href="percentage.html" class="tool-card">
+      <h2>🔢 Percentage Calculator</h2>
+      <p>Quickly calculate percentages, figure out what X is of Y, and solve percentage increase or decrease problems.</p>
+      <span>Open Tool &rarr;</span>
+    </a>
+
+    <!-- Game 1: Reaction -->
+    <a href="reaction.html" class="tool-card card-game">
+      <h2>⚡ Reaction Time Test</h2>
+      <p>Do you have pro-gamer reflexes? Click when the screen turns green and test your speed in milliseconds.</p>
+      <span>Play Game &rarr;</span>
+    </a>
+
+    <!-- Game 2: Typing Speed -->
+    <a href="typing.html" class="tool-card card-game">
+      <h2>⌨️ Typing Speed Test</h2>
+      <p>How fast are your fingers? Type a short paragraph and find out your Words Per Minute (WPM) score.</p>
+      <span>Play Game &rarr;</span>
+    </a>
+
+    <!-- Game 3: Memory Test -->
+    <a href="memory.html" class="tool-card card-game">
+      <h2>🧠 Color Memory Test</h2>
+      <p>How good is your short-term memory? Watch the flashing colors and repeat the sequence to survive.</p>
+      <span>Play Game &rarr;</span>
+    </a>
+
+  </div>
+
+  <!-- Ad slot -->
+  <div class="ad-slot">Ad space — paste your AdSense ad unit code here</div>
+
+  <!-- Homepage Content (Helps with AdSense Approval) -->
+  <div style="background:#fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+    <h2 style="margin-bottom: 15px; color: #1a365d;">About Our Website</h2>
+    <p style="margin-bottom: 15px; color: #4a5568;">
+      Welcome to our free tool hub. We built this site because we believe that simple, useful utilities shouldn't be hidden behind paywalls or require you to sign up for an account. Whether you are trying to figure out your daily water goals or just want to waste five minutes testing your memory, everything here is 100% free.
+    </p>
+    <p style="color: #4a5568;">
+      All of our tools are built using standard HTML and JavaScript. They run entirely inside your web browser, which means they load instantly and your privacy is protected. We never store or transmit the numbers you enter into our calculators.
+    </p>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 Free Tools & Arcade</p>
+    <p style="margin-top: 10px;">
+      <a href="about.html">About Us</a> | 
+      <a href="privacy.html">Privacy Policy</a>
+    </p>
+  </footer>
+
+</div>
+</body>
+</html>
