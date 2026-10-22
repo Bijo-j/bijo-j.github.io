@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Percentage Calculator - What is X% of Y &amp; X is What Percent of Y</title>
+<meta name="description" content="Free percentage calculator. Find what is X percent of Y, or what percent X is of Y. Instant results, no signup.">
+
+<!-- AdSense verification: paste YOUR code here after approval -->
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.6; color: #222; background: #f7f9fc; padding: 20px;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  header { text-align: center; padding: 24px 0 16px; }
+  header h1 { font-size: 1.7rem; margin-bottom: 8px; }
+  header p { color: #666; font-size: 0.95rem; }
+  .card {
+    background: #fff; border-radius: 10px; padding: 24px;
+    margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .card h2 { font-size: 1.15rem; margin-bottom: 14px; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.95rem; }
+  .field input {
+    width: 100%; padding: 10px 12px; border: 1px solid #ccd;
+    border-radius: 8px; font-size: 1rem;
+  }
+  .field input:focus { outline: none; border-color: #4a7dff; }
+  button {
+    width: 100%; padding: 12px; background: #4a7dff; color: #fff;
+    border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer;
+  }
+  button:hover { background: #3a6ae8; }
+  .result {
+    margin-top: 18px; padding: 16px; background: #eef3ff;
+    border-radius: 8px; font-size: 1.05rem; text-align: center; display: none;
+  }
+  .result strong { color: #2a52c7; font-size: 1.3rem; }
+  .ad-slot {
+    text-align: center; color: #999; font-size: 0.8rem;
+    padding: 12px; border: 1px dashed #ccd; border-radius: 8px; margin: 20px 0;
+  }
+  .faq-item { margin-bottom: 14px; }
+  .faq-item h3 { font-size: 1rem; margin-bottom: 4px; }
+  .faq-item p { color: #555; font-size: 0.95rem; }
+  footer { text-align: center; color: #888; font-size: 0.85rem; padding: 24px 0; }
+  footer a { color: #4a7dff; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>Percentage Calculator</h1>
+    <p>Two quick calculators: find a percentage of a number, or find what percent one number is of another.</p>
+  </header>
+
+  <!-- Calculator 1: What is X% of Y -->
+  <div class="card">
+    <h2>What is X% of Y?</h2>
+    <div class="field">
+      <label for="pct1">Percentage (%)</label>
+      <input type="number" id="pct1" placeholder="e.g. 50">
+    </div>
+    <div class="field">
+      <label for="num1">Of number</label>
+      <input type="number" id="num1" placeholder="e.g. 100">
+    </div>
+    <button onclick="calcPercentOf()">Calculate</button>
+    <div class="result" id="result1"></div>
+  </div>
+
+  <!-- Ad slot 1 -->
+  <div class="ad-slot">Ad space — paste your AdSense ad unit code here</div>
+
+  <!-- Calculator 2: X is what percent of Y -->
+  <div class="card">
+    <h2>X is what percent of Y?</h2>
+    <div class="field">
+      <label for="num2">Number (X)</label>
+      <input type="number" id="num2" placeholder="e.g. 25">
+    </div>
+    <div class="field">
+      <label for="num3">Of total (Y)</label>
+      <input type="number" id="num3" placeholder="e.g. 200">
+    </div>
+    <button onclick="calcWhatPercent()">Calculate</button>
+    <div class="result" id="result2"></div>
+  </div>
+
+  <!-- Ad slot 2 -->
+  <div class="ad-slot">Ad space — paste your AdSense ad unit code here</div>
+
+  <!-- Explanatory content for AdSense -->
+  <div class="card">
+    <h2>How to use this calculator</h2>
+    <p style="margin-bottom:12px;">
+      <strong>Calculator 1</strong> answers questions like "What is 50% of 100?" Enter 50 in the
+      percentage field and 100 in the number field, then click Calculate. The answer is 50.
+    </p>
+    <p>
+      <strong>Calculator 2</strong> answers questions like "25 is what percent of 200?" Enter 25
+      and 200, and the answer is 12.5%. All calculations run in your browser; nothing is uploaded.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item">
+      <h3>How do I calculate a percentage of a number?</h3>
+      <p>Multiply the number by the percentage and divide by 100. For example, 50% of 100 = (50 × 100) ÷ 100 = 50.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How do I find what percent one number is of another?</h3>
+      <p>Divide the part by the total and multiply by 100. For example, 25 ÷ 200 × 100 = 12.5%.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Does this page store my numbers?</h3>
+      <p>No. Everything happens locally in your browser.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Percentage Calculator ·
+      <a href="privacy.html">Privacy Policy</a> ·
+      <a href="about.html">About</a>
+    </p>
+  </footer>
+
+</div>
+
+<script>
+function calcPercentOf() {
+  const pct = parseFloat(document.getElementById('pct1').value);
+  const num = parseFloat(document.getElementById('num1').value);
+  const out = document.getElementById('result1');
+
+  if (isNaN(pct) || isNaN(num)) {
+    out.style.display = 'block';
+    out.innerHTML = 'Please enter valid numbers.';
+    return;
+  }
+  const answer = (pct / 100) * num;
+  out.style.display = 'block';
+  out.innerHTML = pct + '% of ' + num + ' is <strong>' + answer + '</strong>';
+}
+
+function calcWhatPercent() {
+  const part = parseFloat(document.getElementById('num2').value);
+  const whole = parseFloat(document.getElementById('num3').value);
+  const out = document.getElementById('result2');
+
+  if (isNaN(part) || isNaN(whole) || whole === 0) {
+    out.style.display = 'block';
+    out.innerHTML = 'Please enter valid numbers (total cannot be zero).';
+    return;
+  }
+  const pct = (part / whole) * 100;
+  out.style.display = 'block';
+  out.innerHTML = part + ' is <strong>' + pct.toFixed(2) + '%</strong> of ' + whole;
+}
+</script>
+</body>
+</html>
